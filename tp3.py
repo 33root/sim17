@@ -19,11 +19,10 @@ VTA = [15, 20, 5, 20, 5, 15, 10, 10]
 
 # Vector Intervalo entre Arribos, es decir TPLL = VIA[0]
 VIA = [10, 5, 35, 10, 25, 45, 10, 5]
-i = 0
+i, j = 0, 0
 while t <= TF:
-    while i < len(VTA):
-        i = i + 1
-        if TPLL <= TPS:
+    if TPLL <= TPS:
+        if i < len(VTA):
             print "Entrada\n"
             t = TPLL
             TPLL = t + VIA[i]
@@ -33,22 +32,24 @@ while t <= TF:
 
             CLL = CLL + 1
             print "Cantidad total de personas que vinieron es :" + str(CLL) + "\n"
+            i = i + 1
             if NS == 1:
-                TPS = t + VTA[i]
+                TPS = t + VTA[j]
                 STO = STO + t - ITO
-        else:
-            t = TPS
-            print "Salida\n"
-            print "time is :\n" + str(t)
+                j = j + 1
+    else:
+        t = TPS
+        print "Salida\n"
+        print "time is :\n" + str(t)
+
+        STS = STS + t
+
+        if NS > 0:
+            TPS = t + VTA[i]
+            print "Tiempo de proxima salida es: " + str(TPS) + "\n"
             NS = NS - 1
             print "Numero de personas en el sistema es :" + str(NS) + "\n"
             print "Cantidad total de personas que vinieron es :" + str(CLL) + "\n"
-
-            STS = STS + t
-
-            if NS > 0:
-                TPS = t + VTA[i]
-                print "Tiempo de proxima salida es: " + str(TPS) + "\n"
 # Get results
 
 PPS = (STS - STLL) / CLL
